@@ -24,14 +24,14 @@ def single_error_hamming_validation(s: str):
     return "".join(map(lambda x:str(x),l))
 
 
-def single_error_hamming_validation_verbose(s: str):
+def single_error_hamming_validation_verbose(s: str, even_parity = False):
     # convert to binary list
     l = list(map(lambda x:int(x), s))
     # num parity bits
     b = ceil(log2(len(l)))
     print("Num parity bits:",b)
     # expected parity bit value (initialized)
-    e = [0 for _ in range(b)] # if the parity was to be set on even (1 = even, 0 = odd), we'd prefill with 1s instead
+    e = [{True: 1, False: 0}[even_parity] for _ in range(b)] # if the parity was to be set on even (1 = even, 0 = odd), we'd prefill with 1s instead
     # real parity bit value
     r = [l[2**x - 1] for x in range(b)]
     print("Parity bit location (0-index):", [2**x - 1 for x in range(b)])
@@ -70,5 +70,7 @@ def single_error_hamming_validation_verbose(s: str):
 
 if __name__ == "__main__":
     while True:
+        parity = not (input("\n(e)ven or (O)dd parity? ") or "o")[0].lower() == "o"
+        print({True: "even", False: "odd"}[parity], "parity\n")
         s = input("bitstring: ") or "1000000"
-        print(single_error_hamming_validation_verbose(s))
+        print(single_error_hamming_validation_verbose("".join(list(filter(lambda x:x!=" ", s))), parity))

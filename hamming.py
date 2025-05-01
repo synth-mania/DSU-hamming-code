@@ -3,10 +3,10 @@ from math import log2, ceil
 def int_to_bin_list(i: int):
     return list(reversed(list(map(lambda x:int(x),str(bin(i))[2:]))))
 
-def single_error_hamming_validation(s: str):
+def single_error_hamming_validation(s: str, even_parity = False):
     l = list(map(lambda x:int(x), s))
     b = ceil(log2(len(l)))
-    e = [0 for _ in range(b)] # Expected parity bits. If the parity was to be set on even (1 = even, 0 = edd), we'd prefill with 1s instead
+    e = [{True: 1, False: 0}[even_parity] for _ in range(b)] # Expected parity bits. If the parity was to be set on even (1 = even, 0 = edd), we'd prefill with 1s instead
     r = [l[2**x - 1] for x in range(b)] # real parity bits
     for i in range(len(l)):  # for every list index
         bin_i = int_to_bin_list(i + 1)  # convert index to binary

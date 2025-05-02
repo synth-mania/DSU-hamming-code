@@ -77,5 +77,11 @@ if __name__ == "__main__":
     while True:
         parity = not (input("\n(e)ven or (O)dd parity? ") or "o")[0].lower() == "o"
         print({True: "even", False: "odd"}[parity], "parity\n")
-        s = input("bitstring: ") or "1000000"
-        single_error_hamming_validation_verbose("".join(list(filter(lambda x:x!=" ", s))), parity)
+        
+        s = "".join(list(filter(lambda x:x!=" ", input("bitstring: ") or "1000000")))
+        try:
+            int(s)
+        except Exception as e:
+            continue
+
+        single_error_hamming_validation_verbose(s, parity)
